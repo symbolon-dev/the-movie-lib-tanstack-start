@@ -1,0 +1,140 @@
+# The Movie Library
+
+A modern movie library application developed with TanStack Start and using the TMDB API.
+
+## Frontend Developer Coding Challenge
+
+This project is a coding challenge for frontend developers to demonstrate skills in modern web technologies, UX/UI design, and development capabilities.
+
+**Challenge Overview:**
+Develop a web application that displays a movie list with search, filter, and sort functionality. Users should be able to click on movies to view detailed information.
+
+**Required Technologies:**
+
+- Framework: TanStack Start
+- Styling: Tailwind CSS
+- API: TMDB (The Movie Database)
+- Code Management: Git
+
+**Key Features to Implement:**
+
+- Movie list display
+- Search functionality by title
+- Filter by genres
+- Sort by various criteria (popularity, date, rating)
+- Detailed movie view
+- Responsive design
+
+**Note:** Due to TMDB API limitations, the search endpoint doesn't support genre filtering. The implementation uses client-side filtering when combining search with genres, which means infinite scroll loads search results and filters them locally - you may need to scroll further to see more filtered results.
+
+## Features
+
+- **Movie Discovery**: Browse popular movies from the TMDB database
+- **Movie Search**: Search for specific movies by title
+- **Advanced Filters**: Filter movies by genres and sort by popularity, release date, rating, etc.
+- **Detailed Movie Views**: View comprehensive information including cast, crew, ratings, and metadata
+- **Infinite Scrolling**: Automatically load more movies as you scroll
+- **Dark/Light Mode**: Toggle between themes with persistent preference
+- **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices
+- **Loading States**: Smooth skeleton loading animations
+- **Error Handling**: Graceful error handling with user-friendly messages
+
+## Technologies
+
+- [TanStack Start](https://tanstack.com/start/latest)
+- [React 19.2](https://react.dev)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com)
+- [shadcn/ui](https://ui.shadcn.com) (UI Components)
+- [Zod](https://zod.dev) (Runtime Type Validation)
+- [Lucide React](https://lucide.dev) (Icons)
+- [date-fns](https://date-fns.org) (Date Utilities)
+
+## Prerequisites
+
+- Node.js 20.x or higher
+- TMDB API key (available for free at [themoviedb.org](https://www.themoviedb.org/documentation/api))
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/the-movie-lib-tanstack-start.git
+cd the-movie-lib-tanstack-start
+```
+
+2. Install dependencies:
+
+```bash
+pnpm install
+```
+
+3. Create a `.env.local` file in the root directory with the following environment variables:
+
+```
+TMDB_API_KEY=your_tmdb_api_key
+```
+
+4. Start the development server:
+
+```bash
+pnpm dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Available Scripts
+
+- `pnpm dev` - Start development server with Turbopack
+- `pnpm build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm lint` - Run ESLint
+- `pnpm format` - Format code with Prettier
+
+## Usage
+
+- **Home Page**: Browse popular movies with filters and search
+- **Search**: Use the search bar to find movies by title
+- **Filters**: Select genres and sort by various criteria (popularity, release date, rating, etc.)
+- **Movie Details**: Click on any movie card to view detailed information
+- **Navigation**: Infinite scrolling automatically loads more results
+- **Theme Toggle**: Switch between light and dark modes using the toggle in the header
+- **Responsive**: Works seamlessly on all device sizes
+
+## Project Structure
+
+```
+├── src/
+│   ├── components/         # UI-Komponenten
+│   │   ├── ui/             # shadcn components
+│   │   ├── movie/          # Movie-bezogene Komponenten
+│   │   ├── common/         # Reusable Components
+│   │   └── skeleton/       # Loading Skeletons
+│   ├── data/               # Tanstack Start Server Functions
+│   ├── hooks/              # Custom Hooks
+│   ├── lib/                # API + externe Integrationen
+│   ├── routes/             # TanStack Router route files
+│   ├── schemas/            # Zod Schemas
+│   ├── types/              # TypeScript Types
+│   └── utils/              # Helper & Utility Functions
+└── public/
+
+```
+
+## Architecture
+
+- **API Layer**: Lightweight client utilities that directly access the TMDB API
+- **Type Safety**: Zod schemas for runtime validation + TypeScript
+- **Styling**: Tailwind CSS with shadcn/ui component system
+- **Loading**: Route-level loading.tsx + component-level skeleton states
+
+## Deployment
+
+The application can be deployed with [Vercel](https://vercel.com)
+
+```bash
+pnpm build
+```
+
+Make sure to set the environment variables in your deployment platform.

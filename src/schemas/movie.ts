@@ -1,0 +1,76 @@
+import { z } from 'zod';
+
+export const MovieSchema = z.object({
+    adult: z.boolean(),
+    backdrop_path: z.string().nullish(),
+    genre_ids: z.array(z.number()).default([]),
+    id: z.number(),
+    original_language: z.string(),
+    original_title: z.string(),
+    overview: z.string().default(''),
+    popularity: z.number().default(0),
+    poster_path: z.string().nullish(),
+    release_date: z.string().default('unknown'),
+    primary_release_date: z.string().default('unknown'),
+    revenue: z.number().optional(),
+    title: z.string(),
+    video: z.boolean().default(false),
+    vote_average: z.number().default(0),
+    vote_count: z.number().default(0),
+});
+
+export const GenreSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+});
+
+export const ProductionCompanySchema = z.object({
+    id: z.number(),
+    logo_path: z.string().nullish(),
+    name: z.string(),
+    origin_country: z.string(),
+});
+
+export const ProductionCountrySchema = z.object({
+    iso_3166_1: z.string(),
+    name: z.string(),
+});
+
+export const SpokenLanguageSchema = z.object({
+    english_name: z.string(),
+    iso_639_1: z.string(),
+    name: z.string(),
+});
+
+export const MovieDetailSchema = MovieSchema.extend({
+    genre_ids: z.array(z.number()).optional(),
+    belongs_to_collection: z
+        .object({
+            id: z.number(),
+            name: z.string(),
+        })
+        .nullish(),
+    budget: z.number(),
+    genres: z.array(GenreSchema),
+    homepage: z.string().nullish(),
+    imdb_id: z.string().nullish(),
+    production_companies: z.array(ProductionCompanySchema),
+    production_countries: z.array(ProductionCountrySchema),
+    revenue: z.number(),
+    runtime: z.number(),
+    spoken_languages: z.array(SpokenLanguageSchema),
+    status: z.string(),
+    tagline: z.string().nullish(),
+    video: z.boolean(),
+});
+
+export const MovieResponseSchema = z.object({
+    page: z.number(),
+    results: z.array(MovieSchema),
+    total_pages: z.number(),
+    total_results: z.number(),
+});
+
+export const GenreResponseSchema = z.object({
+    genres: z.array(GenreSchema),
+});
