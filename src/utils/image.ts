@@ -4,7 +4,7 @@ type BackdropSize = 'w300' | 'w780' | 'w1280' | 'original';
 
 const IMAGE_URL = 'https://image.tmdb.org/t/p';
 
-const getImageUrl = (path: string | undefined | null, size: string): string => {
+const getImageUrl = (path: string | null, size: string): string => {
     if (!path) {
         return '';
     }
@@ -12,12 +12,8 @@ const getImageUrl = (path: string | undefined | null, size: string): string => {
     return `${IMAGE_URL}/${size}${path}`;
 };
 
-export const getMoviePosterUrl = (
-    path: string | undefined | null,
-    size: PosterSize = 'w500',
-): string => getImageUrl(path, size);
+export const getMoviePosterUrl = (path: string | null, size: PosterSize = 'w500'): string =>
+    getImageUrl(path, size);
 
-export const getMovieBackdropUrl = (
-    path: string | undefined | null,
-    size: BackdropSize = 'original',
-): string => getImageUrl(path, size);
+export const getMovieBackdropUrl = (path: string | null, size: BackdropSize = 'original'): string =>
+    getImageUrl(path, size);
