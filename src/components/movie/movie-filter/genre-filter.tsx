@@ -31,12 +31,14 @@ export const GenreFilter = ({ genres, className = '' }: GenreFilterProps) => {
                         'cursor-pointer transition-colors focus:outline-none',
                         !isSelected(genre.id) && 'hover:border-primary hover:bg-primary/10',
                     )}
-                    onClick={() => handleGenreToggle(genre.id)}
-                    onMouseDown={(e) => e.preventDefault()}
-                    onKeyDown={async (e) => {
+                    onClick={() => void handleGenreToggle(genre.id)}
+                    onMouseDown={(e) => {
+                        e.preventDefault();
+                    }}
+                    onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            await handleGenreToggle(genre.id);
+                            void handleGenreToggle(genre.id);
                         }
                     }}
                     role="button"

@@ -4,4 +4,4 @@ import { fetchMovieGenres } from '@/lib/tmdb';
 
 export const getGenres = createServerFn({
     method: 'GET',
-}).handler(() => fetchMovieGenres());
+}).handler(async () => fetchMovieGenres());

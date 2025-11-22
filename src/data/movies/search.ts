@@ -7,7 +7,7 @@ export const getSearchMovies = createServerFn({
     method: 'GET',
 })
     .inputValidator(SearchMoviesParamsSchema)
-    .handler(({ data }) => {
+    .handler(async ({ data }) => {
         const movies = searchMovies(data.query, data.page);
 
         return movies;

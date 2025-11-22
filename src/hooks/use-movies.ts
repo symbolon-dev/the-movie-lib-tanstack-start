@@ -18,7 +18,7 @@ export const useMovies = () => {
     const { data, error, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } =
         useInfiniteQuery({
             queryKey: ['movies', query, sortBy, genres],
-            queryFn: ({ pageParam = 1 }) => {
+            queryFn: async ({ pageParam = 1 }) => {
                 if (query) {
                     return getSearchMovies({
                         data: {

@@ -60,9 +60,9 @@ export const useMovieFilters = () => {
     const hasActiveFilters =
         searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';
 
-    const setSearchQuery = (query: string) => updateFilters({ searchQuery: query });
-    const setSortBy = (sort: MovieSortOption) => updateFilters({ sortBy: sort });
-    const setSelectedGenres = (genres: number[]) => updateFilters({ selectedGenres: genres });
+    const setSearchQuery = async (query: string) => updateFilters({ searchQuery: query });
+    const setSortBy = async (sort: MovieSortOption) => updateFilters({ sortBy: sort });
+    const setSelectedGenres = async (genres: number[]) => updateFilters({ selectedGenres: genres });
 
     return {
         searchQuery,

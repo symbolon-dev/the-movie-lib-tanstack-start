@@ -12,15 +12,10 @@ import pluginRouter from '@tanstack/eslint-plugin-router';
 
 const config = defineConfig([
     ...tanstackConfig,
-
     ...pluginQuery.configs['flat/recommended'],
-
     ...pluginRouter.configs['flat/recommended'],
-
     reactHooks.configs.flat.recommended,
-
     reactPlugin.configs['recommended-type-checked'],
-
     {
         files: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx'],
         plugins: {
@@ -28,13 +23,25 @@ const config = defineConfig([
         },
         rules: {
             'prefer-const': 'error',
-            'no-param-reassign': 'error',
-            'no-else-return': 'error',
-            'no-return-await': 'error',
-            'object-shorthand': ['error', 'always'],
+            'no-var': 'error',
             'prefer-template': 'error',
             'prefer-arrow-callback': 'error',
             'arrow-body-style': ['error', 'as-needed'],
+            'object-shorthand': ['error', 'always'],
+
+            'no-param-reassign': 'error',
+            'no-else-return': 'error',
+            'eqeqeq': ['error', 'always', { 'null': 'ignore' }],
+            'no-unsafe-optional-chaining': 'error',
+            'no-nested-ternary': 'error',
+            'no-unneeded-ternary': 'error',
+            'yoda': 'error',
+            'curly': ['error', 'all'],
+
+            'no-eval': 'error',
+            'no-implied-eval': 'error',
+            'no-new-func': 'error',
+
             'no-restricted-syntax': [
                 'error',
                 {
@@ -43,32 +50,47 @@ const config = defineConfig([
                 },
             ],
             'unicorn/no-array-for-each': 'error',
-            'eqeqeq': ['error', 'always', { 'null': 'ignore' }],
-            'no-unsafe-optional-chaining': 'error',
+
             'no-console': ['warn', { allow: ['warn', 'error'] }],
-            'no-var': 'error',
-            'no-nested-ternary': 'error',
-            'no-unneeded-ternary': 'error',
-            'yoda': 'error',
-            'curly': ['error', 'all'],
+
             '@typescript-eslint/no-explicit-any': 'error',
+            '@typescript-eslint/no-shadow': 'error',
+            '@typescript-eslint/no-unnecessary-condition': 'warn',
+            '@typescript-eslint/no-non-null-assertion': 'warn',
+            '@typescript-eslint/switch-exhaustiveness-check': 'error',
+
             '@typescript-eslint/no-unused-vars': ['error', {
                 'argsIgnorePattern': '^_',
                 'varsIgnorePattern': '^_',
                 'ignoreRestSiblings': true
             }],
-            '@typescript-eslint/no-shadow': 'error',
-            '@typescript-eslint/no-floating-promises': 'error',
+
             '@typescript-eslint/consistent-type-imports': ['error', { 'prefer': 'type-imports' }],
-            '@typescript-eslint/no-unnecessary-condition': 'warn',
-            '@typescript-eslint/no-non-null-assertion': 'warn',
+
             '@typescript-eslint/prefer-nullish-coalescing': 'error',
             '@typescript-eslint/prefer-optional-chain': 'error',
-            '@typescript-eslint/switch-exhaustiveness-check': 'error',
             '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
             '@typescript-eslint/no-invalid-void-type': 'off',
+
+            '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+            '@typescript-eslint/prefer-reduce-type-parameter': 'error',
+
+            '@typescript-eslint/no-floating-promises': 'error',
+            '@typescript-eslint/no-misused-promises': 'error',
+            '@typescript-eslint/await-thenable': 'error',
+            '@typescript-eslint/require-await': 'warn',
+            '@typescript-eslint/promise-function-async': 'error',
+            'no-async-promise-executor': 'error',
+            '@typescript-eslint/return-await': ['error', 'in-try-catch'],
+
             'react-hooks/rules-of-hooks': 'error',
             'react-hooks/exhaustive-deps': 'error',
+
+            '@eslint-react/no-leaked-conditional-rendering': 'error',
+            '@eslint-react/no-useless-fragment': 'error',
+            '@eslint-react/no-array-index-key': 'warn',
+            '@eslint-react/no-redundant-should-component-update': 'error',
+
             'unicorn/filename-case': ['error', { cases: { kebabCase: true, pascalCase: true } }],
         },
     },
@@ -92,7 +114,6 @@ const config = defineConfig([
             'jsx-a11y/aria-unsupported-elements': 'error',
         },
     },
-    
     prettier,
 ]);
 

@@ -42,7 +42,7 @@ const fetchFromTMDB = async <T>(endpoint: string, schema: z.ZodSchema<T>): Promi
     }
 };
 
-export const discoverMovies = (options?: MovieDiscoverParams) => {
+export const discoverMovies = async (options?: MovieDiscoverParams) => {
     const page = options?.page?.toString() ?? '1';
     const sortBy = options?.sortBy ?? 'popularity.desc';
     const withGenres = options?.withGenres ?? '';
@@ -53,7 +53,7 @@ export const discoverMovies = (options?: MovieDiscoverParams) => {
     );
 };
 
-export const searchMovies = (query: string, page: number = 1) => {
+export const searchMovies = async (query: string, page: number = 1) => {
     if (!query) {
         throw new Error('Search query cannot be empty');
     }
@@ -64,7 +64,7 @@ export const searchMovies = (query: string, page: number = 1) => {
     );
 };
 
-export const fetchMovieDetails = (id: string) => {
+export const fetchMovieDetails = async (id: string) => {
     if (!id) {
         throw new Error('Movie ID cannot be empty');
     }
@@ -72,4 +72,4 @@ export const fetchMovieDetails = (id: string) => {
     return fetchFromTMDB(`/movie/${id}`, MovieDetailSchema);
 };
 
-export const fetchMovieGenres = () => fetchFromTMDB('/genre/movie/list', GenreResponseSchema);
+export const fetchMovieGenres = async () => fetchFromTMDB('/genre/movie/list', GenreResponseSchema);

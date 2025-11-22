@@ -25,7 +25,9 @@ export const BackButton = ({ fallback = '/', label = 'Back', className = '' }: B
             variant="outline-primary"
             animationType="back"
             className={className}
-            onClick={handleClick}
+            onClick={() => {
+                void handleClick();
+            }}
             role="link"
             aria-label={fallback ? `Go to ${fallback}` : 'Go back'}
         >

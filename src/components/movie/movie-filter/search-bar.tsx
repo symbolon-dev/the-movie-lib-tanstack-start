@@ -57,7 +57,9 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
             {query ? (
                 <button
                     type="button"
-                    onClick={handleClear}
+                    onClick={() => {
+                        void handleClear();
+                    }}
                     className="text-muted-foreground hover:text-foreground absolute right-3"
                     aria-label="Clear search"
                 >

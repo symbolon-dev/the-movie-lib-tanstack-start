@@ -41,7 +41,12 @@ export const SortSelect = ({ className = '' }: SortSelectProps) => {
 
     return (
         <div className={cn('w-full', className)}>
-            <Select value={sortBy} onValueChange={handleValueChange}>
+            <Select
+                value={sortBy}
+                onValueChange={() => {
+                    void handleValueChange(sortBy);
+                }}
+            >
                 <SelectTrigger className="w-full" aria-label="Sort movies by">
                     <SelectValue placeholder="Please select" />
                 </SelectTrigger>

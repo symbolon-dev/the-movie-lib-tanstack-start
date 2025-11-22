@@ -87,7 +87,9 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     return (
         <AnimatedThemeToggler
             ref={buttonRef}
-            onToggle={changeTheme}
+            onToggle={() => {
+                void changeTheme();
+            }}
             mode={theme as ThemeMode}
             className={className}
             disabled={!theme}

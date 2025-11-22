@@ -33,7 +33,9 @@ export const MovieFilter = ({ genres }: MovieFilterProps) => {
 
                 <div className="border-border border-t pt-4">
                     <Button
-                        onClick={() => resetFilters()}
+                        onClick={() => {
+                            void resetFilters();
+                        }}
                         variant="outline"
                         className="w-full"
                         animationType="subtle"
