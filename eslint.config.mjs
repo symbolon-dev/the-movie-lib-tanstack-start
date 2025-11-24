@@ -1,3 +1,5 @@
+//  @ts-check
+
 import { defineConfig } from 'eslint/config';
 import { tanstackConfig } from '@tanstack/eslint-config';
 
@@ -19,7 +21,7 @@ const config = defineConfig([
     {
         files: ['**/*.js', '**/*.ts', '**/*.tsx', '**/*.jsx'],
         plugins: {
-            'unicorn': unicorn,
+            unicorn,
         },
         rules: {
             'prefer-const': 'error',

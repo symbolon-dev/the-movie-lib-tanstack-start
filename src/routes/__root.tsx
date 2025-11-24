@@ -1,51 +1,50 @@
-import { TanStackDevtools } from '@tanstack/react-devtools';
-import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
-import { HeadContent, Outlet, Scripts, createRootRoute } from '@tanstack/react-router';
+import { HeadContent, Scripts, createRootRouteWithContext } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
+import { TanStackDevtools } from '@tanstack/react-devtools';
+
+import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
 
 import appCss from '../styles.css?url';
+
+import type { QueryClient } from '@tanstack/react-query';
 import { Header } from '@/components/layout/header';
-import { QueryProvider } from '@/components/providers/query-provider';
+
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import { ErrorMessage } from '@/components/shared/error-message';
 
-const RootLayout = () => (
+type MyRouterContext = {
+    queryClient: QueryClient;
+};
+
+const RootDocument = ({ children }: { children: React.ReactNode }) => (
     <html lang="en" suppressHydrationWarning>
         <head>
             <HeadContent />
         </head>
         <body className="bg-background text-foreground min-h-screen font-sans antialiased">
-            <QueryProvider>
-                <ThemeProvider defaultTheme="system">
-                    <Header />
-                    <main className="container mx-auto px-4 md:px-8">
-                        <Outlet />
-                    </main>
-                    <Scripts />
-                    <TanStackDevtools
-                        config={{
-                            position: 'bottom-left',
-                        }}
-                        plugins={[
-                            {
-                                name: 'TanStack Query',
-                                render: <ReactQueryDevtoolsPanel />,
-                                defaultOpen: true,
-                            },
-                            {
-                                name: 'Tanstack Router',
-                                render: <TanStackRouterDevtoolsPanel />,
-                                defaultOpen: true,
-                            },
-                        ]}
-                    />
-                </ThemeProvider>
-            </QueryProvider>
+            <ThemeProvider defaultTheme="system">
+                <Header />
+                <main className="container mx-auto px-4 md:px-8">{children}</main>
+                <TanStackDevtools
+                    config={{
+                        position: 'bottom-left',
+                    }}
+                    plugins={[
+                        {
+                            name: 'Tanstack Router',
+                            render: <TanStackRouterDevtoolsPanel />,
+                            defaultOpen: true,
+                        },
+                        TanStackQueryDevtools,
+                    ]}
+                />
+                <Scripts />
+            </ThemeProvider>
         </body>
     </html>
 );
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<MyRouterContext>()({
     head: () => ({
         meta: [
             { charSet: 'utf-8' },
@@ -65,7 +64,7 @@ export const Route = createRootRoute({
             },
         ],
     }),
-    component: RootLayout,
+    shellComponent: RootDocument,
     notFoundComponent: () => (
         <ErrorMessage
             error="The requested page could not be found"

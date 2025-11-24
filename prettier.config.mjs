@@ -1,6 +1,6 @@
-/**
- * @type {import('prettier').Config}
- */
+//  @ts-check
+
+/** @type {import('prettier').Config} */
 const config = {
     printWidth: 100,
     tabWidth: 4,
