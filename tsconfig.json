@@ -1,31 +1,36 @@
 {
+    "include": ["**/*.ts", "**/*.tsx", "eslint.config.js", "prettier.config.js", "vite.config.js"],
+
     "compilerOptions": {
-        "target": "ES2023",
-        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "target": "ES2022",
         "jsx": "react-jsx",
         "module": "ESNext",
-        "moduleResolution": "Bundler",
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
-        "isolatedModules": true,
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "types": ["vite/client"],
+
+        /* Bundler mode */
+        "moduleResolution": "bundler",
         "allowImportingTsExtensions": true,
+        "verbatimModuleSyntax": false,
+        "noEmit": true,
+        "isolatedModules": true,
+
+        /* Linting */
+        "skipLibCheck": true,
         "strict": true,
-        "strictNullChecks": true,
-        "noUncheckedIndexedAccess": true,
-        "noImplicitOverride": true,
-        "noImplicitReturns": true,
-        "noFallthroughCasesInSwitch": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "allowUnusedLabels": false,
-        "allowUnreachableCode": false,
-        "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true,
-        "noEmit": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedSideEffectImports": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitReturns": true,
         "baseUrl": ".",
-        "paths": { "@/*": ["./src/*"] },
-        "types": ["vite/client"]
-    },
-    "include": ["**/*.ts", "**/*.tsx"],
-    "exclude": ["node_modules", "dist", "build"]
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+
+        /* Interop */
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true
+    }
 }
