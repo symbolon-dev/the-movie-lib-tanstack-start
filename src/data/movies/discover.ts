@@ -8,7 +8,7 @@ export const getDiscoverMovies = createServerFn({
 })
     .inputValidator(DiscoverMoviesParamsSchema)
     .handler(async ({ data }) => {
-        const movies = discoverMovies({
+        const movies = await discoverMovies({
             page: data.page,
             sortBy: data.sort_by,
             withGenres: data.with_genres,
