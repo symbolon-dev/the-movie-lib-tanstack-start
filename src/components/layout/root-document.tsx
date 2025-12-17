@@ -7,7 +7,7 @@ import { Header } from '@/components/layout/header';
 
 import { ThemeProvider } from '@/components/providers/theme-provider';
 
-import TanStackQueryDevtools from  '../../integrations/tanstack-query/devtools';
+import TanStackQueryDevtools from '../../integrations/tanstack-query/devtools';
 
 export const RootDocument = ({ children }: { children: React.ReactNode }) => (
     <html lang="en" suppressHydrationWarning>

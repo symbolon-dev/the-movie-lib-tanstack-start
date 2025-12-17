@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
+import { HomePage } from '@/components/pages/home-page';
 import { ServerErrorBoundary } from '@/components/shared/server-error-boundary';
 import { getGenres } from '@/data/movies/genre';
-import { HomePage } from '@/components/pages/home-page';
 
 const metadata = [
     { title: 'Movie Library - Discover Amazing Movies' },
