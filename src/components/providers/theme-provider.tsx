@@ -1,7 +1,8 @@
+import type { Theme } from '@/hooks/use-theme';
 import { ScriptOnce } from '@tanstack/react-router';
-import { createContext, use, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ThemeProviderContext } from '@/hooks/use-theme';
 
-type Theme = 'dark' | 'light' | 'system';
 const MEDIA = '(prefers-color-scheme: dark)';
 
 type ThemeProviderProps = {
@@ -10,31 +11,19 @@ type ThemeProviderProps = {
     storageKey?: string;
 };
 
-type ThemeProviderState = {
-    theme: Theme;
-    setTheme: (theme: Theme) => void;
-};
-
-const initialState: ThemeProviderState = {
-    theme: 'system',
-    setTheme: () => null,
-};
-
-const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
-
 // references:
 // https://ui.shadcn.com/docs/dark-mode/vite
 // https://github.com/pacocoursey/next-themes/blob/main/next-themes/src/index.tsx
-export function ThemeProvider({
+export const ThemeProvider = ({
     children,
     defaultTheme = 'system',
     storageKey = 'theme',
     ...props
-}: ThemeProviderProps) {
+}: ThemeProviderProps) => {
     const [theme, setTheme] = useState<Theme>(
         () =>
-            (typeof window !== 'undefined' ? (localStorage.getItem(storageKey) as Theme) : null) ??
-            defaultTheme,
+            (typeof window !== 'undefined' ? (localStorage.getItem(storageKey) as Theme) : null)
+            ?? defaultTheme,
     );
 
     const handleMediaQuery = useCallback(
@@ -70,7 +59,8 @@ export function ThemeProvider({
         if (theme === 'system') {
             localStorage.removeItem(storageKey);
             targetTheme = window.matchMedia(MEDIA).matches ? 'dark' : 'light';
-        } else {
+        }
+        else {
             localStorage.setItem(storageKey, theme);
             targetTheme = theme;
         }
@@ -95,13 +85,11 @@ export function ThemeProvider({
             <ScriptOnce>
                 {/* Apply theme early to avoid FOUC */}
                 {`document.documentElement.classList.toggle(
-            'dark',
-            localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-            )`}
+                    'dark',
+                    localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+                )`}
             </ScriptOnce>
             {children}
         </ThemeProviderContext>
     );
-}
-
-export const useTheme = () => use(ThemeProviderContext);
+};

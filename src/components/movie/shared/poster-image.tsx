@@ -32,27 +32,32 @@ export const PosterImage = ({
             className,
         )}
     >
-        {path ? (
-            <Image
-                src={getMoviePosterUrl(path, 'w342')}
-                alt={`Movie poster for ${title}`}
-                width={100}
-                height={100}
-                sizes={sizes}
-                loading={loading}
-                className="size-full object-cover"
-            />
-        ) : (
-            showFallback && (
-                <div
-                    className="flex size-full items-center justify-center bg-gray-900 text-center text-gray-500"
-                    role="img"
-                    aria-label={`${fallbackText} for ${title}`}
-                >
-                    <Film className="mr-2 h-6 w-6" aria-hidden="true" />
-                    <span>{fallbackText}</span>
-                </div>
-            )
-        )}
+        {path != null
+            ? (
+                    <Image
+                        src={getMoviePosterUrl(path, 'w342')}
+                        alt={`Movie poster for ${title}`}
+                        width={100}
+                        height={100}
+                        sizes={sizes}
+                        loading={loading}
+                        className="size-full object-cover"
+                    />
+                )
+            : (
+                    showFallback && (
+                        <div
+                            className={`
+                                flex size-full items-center justify-center
+                                bg-gray-900 text-center text-gray-500
+                            `}
+                            role="img"
+                            aria-label={`${fallbackText} for ${title}`}
+                        >
+                            <Film className="mr-2 h-6 w-6" aria-hidden="true" />
+                            <span>{fallbackText}</span>
+                        </div>
+                    )
+                )}
     </div>
 );

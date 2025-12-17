@@ -23,7 +23,7 @@ export const DiscoverMoviesParamsSchema = z.object({
     with_genres: z
         .string()
         .optional()
-        .transform((val) => val ?? ''),
+        .transform(val => val ?? ''),
 });
 
 export const SearchMoviesParamsSchema = z.object({

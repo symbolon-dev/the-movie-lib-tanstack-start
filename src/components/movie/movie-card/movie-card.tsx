@@ -1,7 +1,7 @@
-import { Link } from '@tanstack/react-router';
-import { Star } from 'lucide-react';
-
 import type { Movie } from '@/types/movie';
+import { Link } from '@tanstack/react-router';
+
+import { Star } from 'lucide-react';
 import { PosterImage } from '@/components/movie/shared/poster-image';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
@@ -19,34 +19,77 @@ export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
     return (
         <Card
             className={cn(
-                'border-primary/30 shadow-primary/10 focus-within:ring-primary/60 focus-within:ring-offset-background relative h-full cursor-pointer rounded-xl border shadow-lg transition-transform duration-300 focus-within:scale-[1.02] focus-within:ring-2 focus-within:ring-offset-2 hover:scale-[1.02]',
+                `
+                    border-primary/30 shadow-primary/10 relative h-full
+                    cursor-pointer rounded-xl border shadow-lg
+                    transition-transform duration-300
+                    focus-within:ring-primary/60
+                    focus-within:ring-offset-background
+                    focus-within:scale-[1.02] focus-within:ring-2
+                    focus-within:ring-offset-2
+                    hover:scale-[1.02]
+                `,
                 className,
             )}
         >
             <Link
                 to="/movies/$id"
                 params={{ id: movie.id.toString() }}
-                className="group relative block h-full rounded-xl focus:outline-none"
+                className={`
+                    group relative block h-full rounded-xl
+                    focus:outline-none
+                `}
                 aria-label={`View details for ${movie.title}`}
             >
-                <div className="round relative h-full overflow-hidden rounded-xl">
+                <div className={`
+                    round relative h-full overflow-hidden rounded-xl
+                `}
+                >
                     <PosterImage
                         path={movie.poster_path}
                         title={movie.title}
-                        className="transition-transform duration-500 ease-out group-focus-within:-translate-y-2 group-focus-within:scale-105 group-hover:-translate-y-2 group-hover:scale-105"
+                        className={`
+                            transition-transform duration-500 ease-out
+                            group-focus-within:-translate-y-2
+                            group-focus-within:scale-105
+                            group-hover:-translate-y-2 group-hover:scale-105
+                        `}
                     />
 
-                    <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/90 via-black/60 to-transparent opacity-0 transition-opacity duration-500 ease-out group-focus-within:opacity-100 group-hover:opacity-100" />
+                    <div className={`
+                        pointer-events-none absolute inset-0 bg-linear-to-t
+                        from-black/90 via-black/60 to-transparent opacity-0
+                        transition-opacity duration-500 ease-out
+                        group-focus-within:opacity-100
+                        group-hover:opacity-100
+                    `}
+                    />
 
-                    <div className="absolute inset-x-0 bottom-0 translate-y-full px-5 pb-6 transition-transform duration-500 ease-out group-focus-within:translate-y-0 group-hover:translate-y-0">
+                    <div className={`
+                        absolute inset-x-0 bottom-0 translate-y-full px-5 pb-6
+                        transition-transform duration-500 ease-out
+                        group-focus-within:translate-y-0
+                        group-hover:translate-y-0
+                    `}
+                    >
                         <div className="space-y-3">
-                            <h3 className="heading-5 line-clamp-2 text-white drop-shadow-sm">
+                            <h3 className={`
+                                heading-5 line-clamp-2 text-white drop-shadow-sm
+                            `}
+                            >
                                 {movie.title}
                             </h3>
 
-                            <div className="flex items-center justify-between text-sm text-white/80">
-                                <span>{releaseYear || '—'}</span>
-                                <span className="flex items-center gap-1 text-white/80">
+                            <div className={`
+                                flex items-center justify-between text-sm
+                                text-white/80
+                            `}
+                            >
+                                <span>{releaseYear ?? '—'}</span>
+                                <span className={`
+                                    flex items-center gap-1 text-white/80
+                                `}
+                                >
                                     <Star className="size-3.5" aria-hidden="true" />
                                     <span className="text-sm font-medium">{rating}</span>
                                 </span>
@@ -56,7 +99,7 @@ export const MovieCard = ({ movie, className = '' }: MovieCardProps) => {
                 </div>
 
                 <span className="sr-only">
-                    {`${movie.title} - Release ${releaseYear || 'unknown'}, Rating ${rating}`}
+                    {`${movie.title} - Release ${releaseYear ?? 'unknown'}, Rating ${rating}`}
                 </span>
             </Link>
         </Card>

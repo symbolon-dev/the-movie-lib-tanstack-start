@@ -15,7 +15,8 @@ export const BackButton = ({ fallback = '/', label = 'Back', className = '' }: B
     const handleClick = async () => {
         if (window.history.length > 1) {
             router.history.back();
-        } else {
+        }
+        else {
             await router.navigate({ to: fallback, resetScroll: true });
         }
     };

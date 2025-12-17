@@ -1,9 +1,8 @@
-import { createFileRoute, notFound } from '@tanstack/react-router';
-
 import type { MovieDetail } from '@/types/movie';
-import { BackButton } from '@/components/layout/back-button';
-import { MovieDetailContent } from '@/components/movie/movie-detail/movie-detail-content';
+
+import { createFileRoute, notFound } from '@tanstack/react-router';
 import { MovieDetailSkeleton } from '@/components/movie/movie-detail/movie-detail-skeleton';
+import { MovieDetailPage } from '@/components/pages/movie-detail-page';
 import { ErrorMessage } from '@/components/shared/error-message';
 import { ServerErrorBoundary } from '@/components/shared/server-error-boundary';
 import { getMovie } from '@/data/movies/detail';
@@ -29,13 +28,13 @@ const generateMetadata = (movie: MovieDetail | undefined) => {
 
     try {
         const title = `${movie.title} - Movie Library`;
-        const description =
-            movie.overview || `Watch ${movie.title} and discover more amazing movies.`;
-        const backdropUrl = movie.backdrop_path
+        const description
+            = movie.overview || `Watch ${movie.title} and discover more amazing movies.`;
+        const backdropUrl = movie.backdrop_path != null
             ? getMovieBackdropUrl(movie.backdrop_path, 'w1280')
             : undefined;
 
-        const openGraphImages = backdropUrl
+        const openGraphImages = backdropUrl != null
             ? [{ url: backdropUrl, width: 1280, height: 720, alt: `${movie.title} backdrop` }]
             : [];
 
@@ -56,7 +55,7 @@ const generateMetadata = (movie: MovieDetail | undefined) => {
             { property: 'og:type', content: 'video.movie' },
             { property: 'og:url', content: `/movies/${movie.id}` },
             { property: 'og:site_name', content: 'Movie Library' },
-            ...openGraphImages.map((img) => ({ property: 'og:image', content: img.url })),
+            ...openGraphImages.map(img => ({ property: 'og:image', content: img.url })),
         ];
 
         tags = [
@@ -64,7 +63,7 @@ const generateMetadata = (movie: MovieDetail | undefined) => {
             { name: 'twitter:card', content: 'summary_large_image' },
             { name: 'twitter:title', content: movie.title },
             { name: 'twitter:description', content: description },
-            ...(backdropUrl ? [{ name: 'twitter:image', content: backdropUrl }] : []),
+            ...(backdropUrl != null ? [{ name: 'twitter:image', content: backdropUrl }] : []),
         ];
 
         tags = [
@@ -82,7 +81,8 @@ const generateMetadata = (movie: MovieDetail | undefined) => {
         ];
 
         return tags;
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Failed to generate movie metadata', error);
         return [
             { title: 'Movie Not Found - Movie Library' },
@@ -91,24 +91,13 @@ const generateMetadata = (movie: MovieDetail | undefined) => {
     }
 };
 
-const MovieDetailPage = () => {
-    const { movie } = Route.useLoaderData();
-
-    return (
-        <div className="flex min-h-[calc(100dvh-5rem)] flex-col gap-8 pt-6 pb-12">
-            <BackButton label="Back to Movies" className="w-fit" />
-
-            <MovieDetailContent movie={movie} />
-        </div>
-    );
-};
-
 export const Route = createFileRoute('/movies/$id')({
     loader: async ({ params }) => {
         try {
             const movie = await getMovie({ data: { id: params.id } });
             return { movie };
-        } catch (error) {
+        }
+        catch (error) {
             if (error instanceof Error && error.message.includes('404')) {
                 throw notFound();
             }

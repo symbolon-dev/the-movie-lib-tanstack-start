@@ -1,7 +1,7 @@
+import type { ChangeEvent } from 'react';
 import { Search, XCircle } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useDebounce } from 'react-use';
-import type { ChangeEvent } from 'react';
 
 import { Input } from '@/components/ui/input';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
@@ -42,7 +42,10 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
 
     return (
         <div className={cn('relative flex items-center', className)}>
-            <div className="text-muted-foreground pointer-events-none absolute left-3">
+            <div className={`
+                text-muted-foreground pointer-events-none absolute left-3
+            `}
+            >
                 <Search size={20} />
             </div>
 
@@ -54,18 +57,23 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
                 className="w-full pr-10 pl-10"
             />
 
-            {query ? (
-                <button
-                    type="button"
-                    onClick={() => {
-                        void handleClear();
-                    }}
-                    className="text-muted-foreground hover:text-foreground absolute right-3"
-                    aria-label="Clear search"
-                >
-                    <XCircle size={20} />
-                </button>
-            ) : null}
+            {query
+                ? (
+                        <button
+                            type="button"
+                            onClick={() => {
+                                void handleClear();
+                            }}
+                            className={`
+                                text-muted-foreground absolute right-3
+                                hover:text-foreground
+                            `}
+                            aria-label="Clear search"
+                        >
+                            <XCircle size={20} />
+                        </button>
+                    )
+                : null}
         </div>
     );
 };

@@ -1,10 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { MovieFilter } from '@/components/movie/movie-filter/movie-filter';
-import { MovieResults } from '@/components/movie/movie-list/movie-results';
-import { ClientErrorBoundary } from '@/components/shared/client-error-boundary';
 import { ServerErrorBoundary } from '@/components/shared/server-error-boundary';
 import { getGenres } from '@/data/movies/genre';
+import { HomePage } from '@/components/pages/home-page';
 
 const metadata = [
     { title: 'Movie Library - Discover Amazing Movies' },
@@ -36,34 +34,6 @@ const metadata = [
     },
 ];
 
-const Home = () => {
-    const { genres } = Route.useLoaderData();
-
-    return (
-        <div className="flex flex-col gap-10 pt-6 pb-12">
-            <header className="space-y-3 text-center lg:text-left">
-                <h1 className="heading-1">Discover Your Next Favorite Movie</h1>
-                <p className="text-lead text-muted-foreground">
-                    Browse trending titles, fine-tune filters, and dive into detailed information
-                    for every film.
-                </p>
-            </header>
-
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
-                <section id="filters" className="lg:sticky lg:top-28">
-                    <MovieFilter genres={genres} />
-                </section>
-
-                <section id="results">
-                    <ClientErrorBoundary>
-                        <MovieResults />
-                    </ClientErrorBoundary>
-                </section>
-            </div>
-        </div>
-    );
-};
-
 export const Route = createFileRoute('/')({
     loader: async () => getGenres(),
     head: () => ({
@@ -74,7 +44,7 @@ export const Route = createFileRoute('/')({
             { rel: 'canonical', href: '/' },
         ],
     }),
-    component: Home,
+    component: HomePage,
     errorComponent: ({ error, reset }) => (
         <ServerErrorBoundary error={error} reset={reset} variant="page" />
     ),

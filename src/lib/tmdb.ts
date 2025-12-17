@@ -1,13 +1,15 @@
 import type { z } from 'zod';
 
 import type { MovieDiscoverParams } from '@/types/movie';
+
+import process from 'node:process';
 import { GenreResponseSchema, MovieDetailSchema, MovieResponseSchema } from '@/schemas/movie';
 
 const API_KEY = process.env.TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 const fetchFromTMDB = async <T>(endpoint: string, schema: z.ZodSchema<T>): Promise<T> => {
-    if (!API_KEY) {
+    if (API_KEY == null) {
         throw new Error('TMDB API key is not defined');
     }
 
@@ -25,17 +27,19 @@ const fetchFromTMDB = async <T>(endpoint: string, schema: z.ZodSchema<T>): Promi
             );
         }
 
-        const data = await response.json();
+        const data: unknown = await response.json();
 
         try {
             return schema.parse(data);
-        } catch (validationError) {
+        }
+        catch (validationError) {
             console.error('Schema validation error:', validationError);
             throw new Error(
                 `Schema validation error: API response does not match the expected schema. ${validationError instanceof Error ? validationError.message : 'Unknown error'}`,
             );
         }
-    } catch (error) {
+    }
+    catch (error) {
         throw new Error(
             `Failed to fetch data from TMDB: ${error instanceof Error ? error.message : 'Unknown error'}`,
         );

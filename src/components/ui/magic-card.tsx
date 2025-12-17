@@ -1,6 +1,6 @@
+import type { ComponentProps, PointerEvent as ReactPointerEvent } from 'react';
 import { motion, useMotionTemplate, useMotionValue } from 'motion/react';
 import { useEffect } from 'react';
-import type { ComponentProps, PointerEvent as ReactPointerEvent } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -78,14 +78,21 @@ export const MagicCard = (props: MagicCardProps) => {
                 onPointerLeave?.(event);
             }}
             className={cn(
-                'group border-primary/30 bg-card text-foreground relative overflow-hidden rounded-xl border-2',
+                `
+                    group border-primary/30 bg-card text-foreground relative
+                    overflow-hidden rounded-xl border-2
+                `,
                 className,
             )}
             {...rest}
         >
             <div className="relative z-10">{children}</div>
             <motion.div
-                className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300 group-hover:opacity-(--magic-card-opacity)"
+                className={`
+                    pointer-events-none absolute -inset-px rounded-xl opacity-0
+                    transition-opacity duration-300
+                    group-hover:opacity-(--magic-card-opacity)
+                `}
                 style={{
                     background: gradientColor,
                     ...style,

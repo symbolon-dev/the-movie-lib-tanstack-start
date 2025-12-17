@@ -1,6 +1,6 @@
-import { useEffect, useEffectEvent, useRef } from 'react';
-
 import type { Movie } from '@/types/movie';
+
+import { useEffect, useEffectEvent, useRef } from 'react';
 import { MovieCard } from '@/components/movie/movie-card/movie-card';
 import { MovieListSkeleton } from '@/components/movie/movie-list/movie-list-skeleton';
 import { EmptyState } from '@/components/shared/empty-state';
@@ -46,11 +46,16 @@ export const MovieList = ({ movies, className = '', isLoading = false }: MovieLi
     return (
         <div
             className={cn(
-                'grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+                `
+                    grid grid-cols-1 gap-6
+                    sm:grid-cols-2
+                    lg:grid-cols-3
+                    xl:grid-cols-4
+                `,
                 className,
             )}
         >
-            {movies.map((movie) => (
+            {movies.map(movie => (
                 <MovieCard key={movie.id} movie={movie} />
             ))}
         </div>

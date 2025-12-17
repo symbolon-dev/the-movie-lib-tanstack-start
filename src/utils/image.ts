@@ -5,7 +5,7 @@ type BackdropSize = 'w300' | 'w780' | 'w1280' | 'original';
 const IMAGE_URL = 'https://image.tmdb.org/t/p';
 
 const getImageUrl = (path: string | null, size: string): string => {
-    if (!path) {
+    if (path == null) {
         return '';
     }
 

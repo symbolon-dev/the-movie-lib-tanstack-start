@@ -1,7 +1,7 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
-import { useSearch } from '@tanstack/react-router';
-
 import type { Movie, MovieSortOption } from '@/types/movie';
+import { useInfiniteQuery } from '@tanstack/react-query';
+
+import { useSearch } from '@tanstack/react-router';
 import { getDiscoverMovies } from '@/data/movies/discover';
 import { getSearchMovies } from '@/data/movies/search';
 import { sortMovies } from '@/lib/movie-filters';
@@ -15,8 +15,8 @@ export const useMovies = () => {
     const sortBy = searchParams.sort ?? 'popularity.desc';
     const genres = searchParams.genres ?? '';
 
-    const { data, error, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } =
-        useInfiniteQuery({
+    const { data, error, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch }
+        = useInfiniteQuery({
             queryKey: ['movies', query, sortBy, genres],
             queryFn: async ({ pageParam = 1 }) => {
                 if (query) {
@@ -48,20 +48,20 @@ export const useMovies = () => {
             refetchOnReconnect: false,
         });
 
-    const allMovies: Movie[] = data?.pages.flatMap((page) => page.results) ?? [];
+    const allMovies: Movie[] = data?.pages.flatMap(page => page.results) ?? [];
 
-    const filteredMovies =
-        genres && query
+    const filteredMovies
+        = genres && query
             ? allMovies.filter((movie) => {
-                  const genreIds = genres.split(',').map(Number);
-                  return genreIds.every((genreId) => movie.genre_ids.includes(genreId));
-              })
+                    const genreIds = genres.split(',').map(Number);
+                    return genreIds.every(genreId => movie.genre_ids.includes(genreId));
+                })
             : allMovies;
 
     const sortedMovies = query ? sortMovies(filteredMovies, sortBy) : filteredMovies;
 
     const uniqueMovies = sortedMovies.filter(
-        (movie, index, self) => index === self.findIndex((m) => m.id === movie.id),
+        (movie, index, self) => index === self.findIndex(m => m.id === movie.id),
     );
 
     const lastPage = data?.pages[data.pages.length - 1];

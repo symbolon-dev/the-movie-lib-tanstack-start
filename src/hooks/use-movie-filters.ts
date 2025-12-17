@@ -1,6 +1,6 @@
-import { useNavigate, useSearch } from '@tanstack/react-router';
-
 import type { MovieSortOption } from '@/types/movie';
+
+import { useNavigate, useSearch } from '@tanstack/react-router';
 
 export const useMovieFilters = () => {
     const navigate = useNavigate();
@@ -10,8 +10,8 @@ export const useMovieFilters = () => {
 
     const searchQuery = searchParams.q ?? '';
     const sortBy = searchParams.sort ?? 'popularity.desc';
-    const selectedGenres =
-        typeof searchParams.genres === 'string'
+    const selectedGenres
+        = typeof searchParams.genres === 'string'
             ? searchParams.genres.split(',').map(Number).filter(Boolean)
             : [];
 
@@ -25,7 +25,8 @@ export const useMovieFilters = () => {
         if (updates.searchQuery !== undefined) {
             if (updates.searchQuery.trim()) {
                 newParams.q = updates.searchQuery.trim();
-            } else {
+            }
+            else {
                 delete newParams.q;
             }
         }
@@ -37,7 +38,8 @@ export const useMovieFilters = () => {
         if (updates.selectedGenres !== undefined) {
             if (updates.selectedGenres.length > 0) {
                 newParams.genres = updates.selectedGenres.join(',');
-            } else {
+            }
+            else {
                 delete newParams.genres;
             }
         }
@@ -57,8 +59,8 @@ export const useMovieFilters = () => {
         });
     };
 
-    const hasActiveFilters =
-        searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';
+    const hasActiveFilters
+        = searchQuery.trim() !== '' || selectedGenres.length > 0 || sortBy !== 'popularity.desc';
 
     const setSearchQuery = async (query: string) => updateFilters({ searchQuery: query });
     const setSortBy = async (sort: MovieSortOption) => updateFilters({ sortBy: sort });

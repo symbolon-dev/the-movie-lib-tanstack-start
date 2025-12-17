@@ -1,7 +1,7 @@
-import { DollarSign } from 'lucide-react';
 import type { ReactNode } from 'react';
-
 import type { ProductionCompany, ProductionCountry, SpokenLanguage } from '@/types/movie';
+
+import { DollarSign } from 'lucide-react';
 import { formatCurrency } from '@/utils/formatter';
 
 type InfoCardProps = {
@@ -12,13 +12,20 @@ type InfoCardProps = {
 };
 
 const InfoCard = ({ title, content, icon, visible = true }: InfoCardProps) => {
-    if (!visible || !content) {
+    if (visible == null || content == null) {
         return null;
     }
 
     return (
-        <div className="border-border/60 bg-background/80 rounded-2xl border p-4 shadow-sm backdrop-blur-sm">
-            <h3 className="heading-6 text-foreground mb-2 flex items-center gap-2">
+        <div className={`
+            border-border/60 bg-background/80 rounded-2xl border p-4 shadow-sm
+            backdrop-blur-sm
+        `}
+        >
+            <h3 className={`
+                heading-6 text-foreground mb-2 flex items-center gap-2
+            `}
+            >
                 {icon}
                 {title}
             </h3>
@@ -44,9 +51,9 @@ export const MovieInfo = ({
     budget,
     revenue,
 }: MovieInfoProps) => {
-    const companies = productionCompanies.map((company) => company.name).join(', ');
-    const countries = productionCountries.map((country) => country.name).join(', ');
-    const languages = spokenLanguages.map((lang) => lang.name).join(', ');
+    const companies = productionCompanies.map(company => company.name).join(', ');
+    const countries = productionCountries.map(country => country.name).join(', ');
+    const languages = spokenLanguages.map(lang => lang.name).join(', ');
 
     return (
         <>
@@ -57,7 +64,12 @@ export const MovieInfo = ({
                 </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className={`
+                grid grid-cols-1 gap-x-8 gap-y-4
+                sm:grid-cols-2
+                lg:grid-cols-3
+            `}
+            >
                 <InfoCard
                     title="Production"
                     content={companies}

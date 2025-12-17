@@ -1,21 +1,21 @@
 import { format, getYear } from 'date-fns';
 
 export const formatDate = (date: string | undefined, formatStr: string = 'MMM d, yyyy'): string => {
-    if (!date) {
+    if (date == null) {
         return 'Unknown';
     }
     return format(new Date(date), formatStr);
 };
 
 export const formatYear = (date: string | undefined): string | number => {
-    if (!date) {
+    if (date == null) {
         return 'Unknown';
     }
     return getYear(new Date(date));
 };
 
 export const formatRuntime = (minutes: number | undefined): string => {
-    if (!minutes) {
+    if (minutes == null || minutes === 0) {
         return '0min';
     }
     const hours = Math.floor(minutes / 60);
@@ -24,7 +24,7 @@ export const formatRuntime = (minutes: number | undefined): string => {
 };
 
 export const formatCurrency = (amount: number | undefined): string => {
-    if (!amount) {
+    if (amount == null || amount === 0) {
         return '$0';
     }
     return new Intl.NumberFormat('en-US', {

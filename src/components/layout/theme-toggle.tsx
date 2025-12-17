@@ -1,9 +1,9 @@
-import { startTransition, useRef, useState } from 'react';
-import { useMount } from 'react-use';
-
 import type { ThemeMode } from '@/components/ui/animated-theme-toggler';
-import { useTheme } from '@/components/providers/theme-provider';
+import { startTransition, useRef, useState } from 'react';
+
+import { useMount } from 'react-use';
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
+import { useTheme } from '@/hooks/use-theme';
 
 type ThemeToggleProps = {
     className?: string;
@@ -50,7 +50,8 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
                     toggleMode();
                 });
             }).ready;
-        } catch (error) {
+        }
+        catch (error) {
             console.error('Theme view transition failed', error);
             setIsTransitioning(false);
             toggleMode();
