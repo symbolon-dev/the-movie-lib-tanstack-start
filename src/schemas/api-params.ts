@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const MovieSortOptionSchema = z.enum([
+export const MOVIE_SORT_OPTIONS = [
     'popularity.desc',
     'popularity.asc',
     'primary_release_date.desc',
@@ -15,7 +15,9 @@ export const MovieSortOptionSchema = z.enum([
     'revenue.desc',
     'vote_count.asc',
     'vote_count.desc',
-]);
+] as const;
+
+export const MovieSortOptionSchema = z.enum(MOVIE_SORT_OPTIONS);
 
 export const DiscoverMoviesParamsSchema = z.object({
     page: z.coerce.number().int().min(1).max(500).default(1),

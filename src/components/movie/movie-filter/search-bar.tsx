@@ -1,7 +1,5 @@
 import type { ChangeEvent } from 'react';
 import { Search, XCircle } from 'lucide-react';
-import { useRef, useState } from 'react';
-import { useDebounce } from 'react-use';
 
 import { Input } from '@/components/ui/input';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
@@ -11,32 +9,15 @@ type SearchBarProps = {
     className?: string;
 };
 
-const DEBOUNCE_DELAY = 300;
-
 export const SearchBar = ({ className = '' }: SearchBarProps) => {
     const { searchQuery, setSearchQuery } = useMovieFilters();
-    const [query, setQuery] = useState(searchQuery);
-    const prevSearchQueryRef = useRef(searchQuery);
-
-    useDebounce(
-        async () => {
-            if (query !== searchQuery) {
-                prevSearchQueryRef.current = query;
-                await setSearchQuery(query);
-            }
-        },
-        DEBOUNCE_DELAY,
-        [query],
-    );
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        setQuery(value);
+        void setSearchQuery(value);
     };
 
     const handleClear = async () => {
-        setQuery('');
-        prevSearchQueryRef.current = '';
         await setSearchQuery('');
     };
 
@@ -52,12 +33,12 @@ export const SearchBar = ({ className = '' }: SearchBarProps) => {
             <Input
                 type="text"
                 placeholder="Search movies..."
-                value={query}
+                value={searchQuery}
                 onChange={handleChange}
                 className="w-full pr-10 pl-10"
             />
 
-            {query
+            {searchQuery
                 ? (
                         <button
                             type="button"

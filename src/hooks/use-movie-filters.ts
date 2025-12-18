@@ -1,61 +1,48 @@
 import type { MovieSortOption } from '@/types/movie';
 
-import { useNavigate, useSearch } from '@tanstack/react-router';
+import { parseAsArrayOf, parseAsInteger, parseAsString, parseAsStringLiteral, useQueryStates } from 'nuqs';
+import { MOVIE_SORT_OPTIONS } from '@/schemas/api-params';
 
 export const useMovieFilters = () => {
-    const navigate = useNavigate();
-    const searchParams: { q?: string; sort?: string; genres?: string } = useSearch({
-        strict: false,
-    });
+    const [filters, setFilters] = useQueryStates(
+        {
+            q: parseAsString.withDefault('').withOptions({
+                history: 'replace',
+                throttleMs: 300,
+            }),
+            sort: parseAsStringLiteral(MOVIE_SORT_OPTIONS as readonly string[]).withDefault('popularity.desc').withOptions({
+                history: 'replace',
+            }),
+            genres: parseAsArrayOf(parseAsInteger).withDefault([]).withOptions({
+                history: 'replace',
+            }),
+        },
+        {
+            history: 'replace',
+        },
+    );
 
-    const searchQuery = searchParams.q ?? '';
-    const sortBy = searchParams.sort ?? 'popularity.desc';
-    const selectedGenres
-        = typeof searchParams.genres === 'string'
-            ? searchParams.genres.split(',').map(Number).filter(Boolean)
-            : [];
+    const searchQuery = filters.q;
+    const sortBy = filters.sort;
+    const selectedGenres = filters.genres;
 
     const updateFilters = async (updates: {
         searchQuery?: string;
         sortBy?: MovieSortOption;
         selectedGenres?: number[];
     }) => {
-        const newParams = { ...searchParams };
-
-        if (updates.searchQuery !== undefined) {
-            if (updates.searchQuery.trim()) {
-                newParams.q = updates.searchQuery.trim();
-            }
-            else {
-                delete newParams.q;
-            }
-        }
-
-        if (updates.sortBy !== undefined) {
-            newParams.sort = updates.sortBy;
-        }
-
-        if (updates.selectedGenres !== undefined) {
-            if (updates.selectedGenres.length > 0) {
-                newParams.genres = updates.selectedGenres.join(',');
-            }
-            else {
-                delete newParams.genres;
-            }
-        }
-
-        await navigate({
-            to: '.',
-            search: newParams as { q?: string; sort?: string; genres?: string },
-            replace: true,
+        await setFilters({
+            ...(updates.searchQuery !== undefined && { q: updates.searchQuery.trim() || null }),
+            ...(updates.sortBy !== undefined && { sort: updates.sortBy }),
+            ...(updates.selectedGenres !== undefined && { genres: updates.selectedGenres.length > 0 ? updates.selectedGenres : null }),
         });
     };
 
     const resetFilters = async () => {
-        await navigate({
-            to: '.',
-            search: {},
-            replace: true,
+        await setFilters({
+            q: null,
+            sort: 'popularity.desc',
+            genres: null,
         });
     };
 
