@@ -1,6 +1,7 @@
 import type { ThemeMode } from '@/components/ui/animated-theme-toggler';
 import { startTransition, useRef, useState } from 'react';
 
+import { useIsMounted } from 'usehooks-ts';
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 import { useTheme } from '@/hooks/use-theme';
 
@@ -12,6 +13,12 @@ export const ThemeToggle = ({ className }: ThemeToggleProps) => {
     const { theme, setTheme } = useTheme();
     const buttonRef = useRef<HTMLButtonElement | null>(null);
     const [isTransitioning, setIsTransitioning] = useState(false);
+
+    const isMounted = useIsMounted();
+
+    if (!isMounted()) {
+        return null;
+    }
 
     const toggleMode = () => {
         setTheme(theme === 'dark' ? 'light' : 'dark');
