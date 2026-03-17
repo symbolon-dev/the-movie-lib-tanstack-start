@@ -1,14 +1,18 @@
 import { ArrowUp } from 'lucide-react';
-import { useWindowScroll } from 'react-use';
+import { useState } from 'react';
 
+import { useEventListener } from 'usehooks-ts';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const SHOW_AFTER_SCROLL = 320; // pixels
 
 export const ToTopFab = () => {
-    const { y } = useWindowScroll();
-    const isVisible = y > SHOW_AFTER_SCROLL;
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEventListener('scroll', () => {
+        setIsVisible(window.scrollY > SHOW_AFTER_SCROLL);
+    });
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
