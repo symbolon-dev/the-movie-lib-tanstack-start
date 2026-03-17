@@ -1,23 +1,21 @@
 import type { Movie, MovieSortOption } from '@/types/movie';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { useSearch } from '@tanstack/react-router';
 import { getDiscoverMovies } from '@/data/movies/discover';
 import { getSearchMovies } from '@/data/movies/search';
 import { sortMovies } from '@/lib/movie-filters';
+import { useMovieFilters } from '@/hooks/use-movie-filters';
 
 export const useMovies = () => {
-    const searchParams: { q?: string; sort?: MovieSortOption; genres?: string } = useSearch({
-        strict: false,
-    });
+    const { searchQuery, sortBy, selectedGenres } = useMovieFilters();
 
-    const query = searchParams.q ?? '';
-    const sortBy = searchParams.sort ?? 'popularity.desc';
-    const genres = searchParams.genres ?? '';
+    const query = searchQuery;
+    const sort = (sortBy ?? 'popularity.desc') as MovieSortOption;
+    const genres = selectedGenres.join(',');
 
     const { data, error, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch }
         = useInfiniteQuery({
-            queryKey: ['movies', query, sortBy, genres],
+            queryKey: ['movies', query, sort, genres],
             queryFn: async ({ pageParam = 1 }) => {
                 if (query) {
                     return getSearchMovies({
@@ -31,7 +29,7 @@ export const useMovies = () => {
                 return getDiscoverMovies({
                     data: {
                         page: pageParam,
-                        sort_by: sortBy,
+                        sort_by: sort,
                         with_genres: genres,
                     },
                 });
@@ -58,7 +56,7 @@ export const useMovies = () => {
                 })
             : allMovies;
 
-    const sortedMovies = query ? sortMovies(filteredMovies, sortBy) : filteredMovies;
+    const sortedMovies = query ? sortMovies(filteredMovies, sort) : filteredMovies;
 
     const uniqueMovies = sortedMovies.filter(
         (movie, index, self) => index === self.findIndex(m => m.id === movie.id),
