@@ -1,5 +1,6 @@
 import { createRouter } from '@tanstack/react-router';
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query';
+import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
 import { getContext } from './integrations/tanstack-query/context';
 
 import * as TanstackQuery from './integrations/tanstack-query/root-provider';
@@ -13,7 +14,9 @@ export const getRouter = () => {
         context: { ...rqContext },
         defaultPreload: 'intent',
         Wrap: (props: { children: React.ReactNode }) => (
-            <TanstackQuery.Provider {...rqContext}>{props.children}</TanstackQuery.Provider>
+            <NuqsAdapter>
+                <TanstackQuery.Provider {...rqContext}>{props.children}</TanstackQuery.Provider>
+            </NuqsAdapter>
         ),
         scrollRestoration: true,
     });

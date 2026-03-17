@@ -1,5 +1,3 @@
-import process from 'node:process';
-
 import { AlertTriangle, ArrowLeft, Home, RotateCcw } from 'lucide-react';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -87,7 +85,7 @@ export const ServerErrorBoundary = ({
                                 {variant === 'page' ? 'Go home' : 'Home'}
                             </Button>
                         </div>
-                        {process.env.NODE_ENV === 'development'
+                        {import.meta.env.NODE_ENV === 'development'
                             ? (
                                     <details className="mt-4">
                                         <summary className={`
