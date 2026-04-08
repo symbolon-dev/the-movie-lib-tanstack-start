@@ -3,8 +3,8 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getDiscoverMovies } from '@/data/movies/discover';
 import { getSearchMovies } from '@/data/movies/search';
-import { sortMovies } from '@/lib/movie-filters';
 import { useMovieFilters } from '@/hooks/use-movie-filters';
+import { sortMovies } from '@/lib/movie-filters';
 
 export const useMovies = () => {
     const { searchQuery, sortBy, selectedGenres } = useMovieFilters();
