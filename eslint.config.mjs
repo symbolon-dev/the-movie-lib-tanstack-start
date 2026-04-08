@@ -18,6 +18,7 @@ export default antfu(
         formatters: true,
         ignores: [
             '**/routeTree.gen.ts',
+            'eslint.config.mjs',
         ],
     },
     ...pluginQuery.configs['flat/recommended'],
